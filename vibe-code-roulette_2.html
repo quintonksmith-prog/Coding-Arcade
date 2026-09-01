@@ -32,10 +32,10 @@
   *{ box-sizing:border-box; }
 
   html,body{
-    margin:0; padding:0; min-height:100%;
+    margin:0; padding:0; height:100%; overflow:hidden;
   }
   body{
-    min-height:100vh;
+    height:100vh; height:100dvh;
     background:
       radial-gradient(1100px 620px at 50% -14%, var(--bg-glow) 0%, transparent 62%),
       radial-gradient(760px 520px at 12% 108%, #17123099 0%, transparent 60%),
@@ -43,8 +43,7 @@
     color:var(--text);
     font-family:'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
     display:flex; align-items:center; justify-content:center;
-    padding:clamp(14px, 4vw, 40px) clamp(10px, 3vw, 20px);
-    overflow-x:hidden;
+    padding:clamp(6px, 2vh, 26px) clamp(8px, 3vw, 20px);
     -webkit-font-smoothing:antialiased;
   }
   /* floor glow under the cabinet */
@@ -59,7 +58,9 @@
   .cabinet{
     position:relative; z-index:1;
     width:min(700px, 100%);
-    padding:clamp(12px, 3vw, 20px) clamp(12px, 3.4vw, 26px) clamp(18px, 4vw, 30px);
+    max-height:100%; min-height:0;
+    display:flex; flex-direction:column;
+    padding:clamp(8px, 1.8vh, 20px) clamp(12px, 3.4vw, 26px) clamp(10px, 2.2vh, 26px);
     border-radius:clamp(18px, 4vw, 30px);
     background:
       linear-gradient(180deg, #232145 0%, var(--cabinet) 18%, var(--cabinet-2) 72%, #0a0a16 100%);
@@ -102,8 +103,9 @@
   /* ─────────────── marquee ─────────────── */
   .marquee{
     position:relative;
+    flex:0 0 auto;
     margin:2px 0 0;
-    padding:clamp(10px,2.6vw,15px) clamp(10px,3vw,18px);
+    padding:clamp(7px,1.5vh,14px) clamp(10px,3vw,18px);
     border-radius:14px;
     text-align:center;
     background:
@@ -124,8 +126,8 @@
   .marquee h1{
     margin:0;
     font-family:'Press Start 2P', monospace;
-    font-size:clamp(11px, 3.35vw, 19px);
-    line-height:1.55;
+    font-size:min(clamp(11px, 3.35vw, 19px), 3.2vh);
+    line-height:1.5;
     letter-spacing:.5px;
     color:var(--gold);
     text-shadow:
@@ -133,7 +135,8 @@
       0 0 26px rgba(255,168,64,.35),
       0 2px 0 #7a5410;
   }
-  .bulbs{ display:flex; justify-content:center; gap:clamp(7px,2.2vw,12px); margin-top:9px; }
+  .marquee h1 span{ display:block; }
+  .bulbs{ display:flex; justify-content:center; gap:clamp(7px,2.2vw,12px); margin-top:clamp(5px,1vh,9px); }
   .bulbs i{
     width:6px; height:6px; border-radius:50%; display:block;
     background:var(--gold); box-shadow:0 0 7px var(--gold), 0 0 14px rgba(255,209,102,.6);
@@ -144,14 +147,17 @@
 
   .subcaption{
     text-align:center; font-size:clamp(9.5px,2.4vw,11.5px); color:var(--muted);
-    letter-spacing:.6px; margin:11px 0 clamp(12px,3vw,18px); text-transform:uppercase;
+    letter-spacing:.6px; margin:clamp(6px,1.2vh,11px) 0 clamp(7px,1.6vh,16px);
+    text-transform:uppercase; flex:0 0 auto;
   }
   .subcaption b{ color:#b9b3e0; font-weight:700; }
 
   /* ─────────────── stage / bezel ─────────────── */
   .bezel{
     position:relative;
-    padding:clamp(10px,2.6vw,18px);
+    flex:0 0 auto; min-height:0;
+    display:flex; align-items:center; justify-content:center;
+    padding:clamp(8px,1.8vh,18px) clamp(10px,2.6vw,18px);
     border-radius:clamp(14px,3vw,22px);
     background:linear-gradient(180deg, #0a0a15, #05050c);
     border:1px solid #2a2650;
@@ -163,13 +169,13 @@
   .stage{
     display:flex; align-items:stretch; justify-content:center;
     gap:clamp(6px, 2vw, 16px);
+    width:100%; min-height:0;
   }
 
   .wheel-wrap{
     position:relative;
-    flex:1 1 auto;
-    max-width:470px;
-    aspect-ratio:1/1;
+    flex:0 0 auto;
+    width:220px; height:220px; /* replaced by fitWheel() on load + resize */
     margin-inline:auto;
     transition:opacity .2s ease, filter .2s ease, transform .2s ease;
   }
@@ -202,7 +208,7 @@
   }
 
   .wheel-disc{
-    position:absolute; inset:clamp(9px,2.6vw,14px);
+    position:absolute; inset:3%;
     border-radius:50%;
     box-shadow:
       0 0 0 clamp(3px,.9vw,5px) #0b0a17,
@@ -305,6 +311,7 @@
   .lever{
     flex:0 0 auto;
     width:clamp(46px, 12vw, 70px);
+    min-height:0;
     display:flex; flex-direction:column; align-items:center; justify-content:flex-end;
     padding-bottom:clamp(4px,1.6vw,10px);
   }
@@ -312,7 +319,7 @@
     position:relative;
     width:clamp(12px,3.2vw,16px);
     flex:1 1 auto;
-    min-height:90px;
+    min-height:56px;
     max-height:300px;
     margin-bottom:2px;
     border-radius:10px;
@@ -367,8 +374,9 @@
       0 6px 14px -6px rgba(0,0,0,.9);
   }
   .lever-label{
+    flex:0 0 auto;
     font-size:clamp(8px,2.1vw,9.5px); color:var(--muted);
-    margin-top:9px; letter-spacing:.9px; text-align:center; text-transform:uppercase;
+    margin-top:clamp(5px,1vh,9px); letter-spacing:.9px; text-align:center; text-transform:uppercase;
     animation:nudge 2.4s ease-in-out infinite;
   }
   .spinning .lever-label{ animation:none; opacity:.45; }
@@ -376,10 +384,11 @@
 
   /* ─────────────── result ─────────────── */
   .result{
-    margin-top:clamp(14px,3.4vw,22px);
-    min-height:106px;
+    flex:0 0 auto;
+    margin-top:clamp(8px,1.8vh,20px);
+    min-height:var(--result-h, clamp(74px,13vh,106px));
     border-radius:16px;
-    padding:clamp(13px,3.2vw,18px) clamp(12px,3.4vw,20px);
+    padding:clamp(9px,1.8vh,18px) clamp(12px,3.4vw,20px);
     text-align:center;
     background:linear-gradient(180deg, #131226, #0b0a17);
     border:1px solid var(--cabinet-edge);
@@ -402,9 +411,9 @@
   }
   .result .app{
     font-family:'Press Start 2P', monospace;
-    font-size:clamp(13px, 4.1vw, 20px);
-    line-height:1.45;
-    margin:11px 0 12px;
+    font-size:min(clamp(13px, 4.1vw, 20px), 3.4vh);
+    line-height:1.4;
+    margin:clamp(6px,1.4vh,11px) 0 clamp(7px,1.5vh,12px);
     color:#fff;
     text-shadow:0 0 18px var(--accent, rgba(255,255,255,.3));
     word-break:break-word;
@@ -426,14 +435,15 @@
   .chip.extreme{ background:rgba(169,123,255,.14); color:var(--extreme); border:1px solid var(--extreme); box-shadow:0 0 18px -6px var(--extreme); }
 
   .tagline{
-    margin-top:11px; font-size:clamp(11px,2.9vw,13px); color:#a9a4cd;
+    margin-top:clamp(6px,1.3vh,11px); font-size:clamp(11px,2.9vw,13px); color:#a9a4cd;
     line-height:1.6; max-width:44ch;
   }
 
   /* ─────────────── legend ─────────────── */
   .legend{
+    flex:0 0 auto;
     display:flex; justify-content:center; gap:clamp(9px,2.6vw,18px);
-    margin-top:clamp(12px,3vw,18px); flex-wrap:wrap;
+    margin-top:clamp(7px,1.6vh,16px); flex-wrap:wrap;
   }
   .legend div{
     display:flex; align-items:center; gap:7px;
@@ -460,6 +470,19 @@
     .lever-track{ max-height:210px; }
     .tagline{ max-width:34ch; }
   }
+  /* short viewports: drop to one marquee line, then shed the optional rows */
+  @media (max-height:640px){
+    .marquee h1 span{ display:inline; }
+  }
+  @media (max-height:560px){
+    .subcaption{ display:none; }
+    .marquee .bulbs{ display:none; }
+  }
+  @media (max-height:460px){
+    .legend{ display:none; }
+    .result .tagline{ display:none; }
+  }
+
   @media (max-width:390px){
     .screw{ display:none; }
     .stage{ gap:4px; }
@@ -480,7 +503,7 @@
   <span class="screw bl"></span><span class="screw br"></span>
 
   <div class="marquee">
-    <h1>VIBE&nbsp;CODE<br>ROULETTE</h1>
+    <h1><span>VIBE&nbsp;CODE</span> <span>ROULETTE</span></h1>
     <div class="bulbs" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   </div>
 
@@ -751,6 +774,60 @@ function flashWinner(){
   }
 })();
 
+/* ── keep the whole cabinet inside the viewport: the wheel absorbs the slack ──
+   The stage gets its height from the flex leftover, and the wheel is sized in px
+   from that, so growing the wheel can never push the page taller than the screen. */
+const cabinetEl = document.getElementById('cabinet');
+const MAX_WHEEL = 470, MIN_WHEEL = 120;
+
+// The result panel is ~70px taller once it holds a build than it is at rest, so
+// the fit has to budget for the tallest copy that can ever land there — otherwise
+// the page fits on load and then overflows the moment the wheel stops.
+const LONGEST_NAME = Object.values(POOL).flat()
+  .reduce((a,b)=> b.length > a.length ? b : a);
+const LONGEST_TAG = Object.values(TIERS).map(t=>t.tagline)
+  .reduce((a,b)=> b.length > a.length ? b : a);
+const RESERVE_HTML =
+  `<div class="hint">Your build:</div>` +
+  `<div class="app">${LONGEST_NAME}</div>` +
+  `<span class="chip extreme">extreme</span>` +
+  `<div class="tagline">${LONGEST_TAG}</div>`;
+
+// Two-pass measure: collapse the wheel, read how much room the rest of the
+// cabinet needs, then hand the wheel every pixel that's left. The wheel is the
+// only elastic element, so the cabinet can never grow past the viewport.
+function fitWheel(){
+  const stage = document.getElementById('stage');
+  const lever = document.getElementById('lever');
+  const wrap  = document.getElementById('wheelWrap');
+  const res   = document.getElementById('result');
+
+  wrap.style.width = wrap.style.height = '0px';
+
+  // Pin the result panel to its worst-case height so it reserves the space up
+  // front and never reflows the cabinet at the moment a build lands.
+  const keep = res.innerHTML;
+  res.style.removeProperty('--result-h');
+  res.innerHTML = RESERVE_HTML;
+  const resH = Math.ceil(res.getBoundingClientRect().height);
+  res.style.setProperty('--result-h', resH + 'px');
+
+  const rowH   = stage.getBoundingClientRect().height;   // lever's own minimum
+  const chrome = cabinetEl.getBoundingClientRect().height - rowH;
+  res.innerHTML = keep;
+
+  const bodyCS = getComputedStyle(document.body);
+  const padV   = parseFloat(bodyCS.paddingTop) + parseFloat(bodyCS.paddingBottom);
+  const gap    = parseFloat(getComputedStyle(stage).columnGap) || 0;
+
+  const availH = window.innerHeight - padV - chrome;
+  const availW = stage.clientWidth - lever.getBoundingClientRect().width - gap;
+
+  const s = Math.round(Math.max(MIN_WHEEL, Math.min(availW, availH, MAX_WHEEL)));
+  wrap.style.width = wrap.style.height = s + 'px';
+}
+
+
 /* ── confetti ── */
 const fx = document.getElementById('fx');
 const fxc = fx.getContext('2d');
@@ -957,11 +1034,17 @@ function showResult(item){
 }
 
 // Initial board on page load.
+fitWheel();
+addEventListener('resize', fitWheel);
+addEventListener('orientationchange', fitWheel);
+// body tracks the viewport, not the content, so this can't feed back on itself
+if (window.ResizeObserver) new ResizeObserver(fitWheel).observe(document.body);
+
 currentItems = buildSubset();
 drawWheel(currentItems);
 // Repaint once the webfont resolves so the fitted label sizes are measured correctly.
 if (document.fonts && document.fonts.ready){
-  document.fonts.ready.then(()=> drawWheel(currentItems));
+  document.fonts.ready.then(()=>{ fitWheel(); drawWheel(currentItems); });
 }
 
 lever.addEventListener('click', pullLever);
